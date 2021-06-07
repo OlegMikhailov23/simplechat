@@ -7,13 +7,18 @@ const Login = ({loginHandler}) => {
     const [loading, setLoading] = useState(false);
     const [rooms, setRooms] = useState(null);
 
-    useEffect(async () => {
-        try {
+    const refreshRooms = () => {
+        setInterval(async () => {
             const data = await axios.get('/rooms');
             setRooms(data);
-        } catch (e) {
-            throw Error(e)
-        }
+        }, 1000)
+    }
+
+    useEffect(async () => {
+        refreshRooms();
+        const data = await axios.get('/rooms');
+        setRooms(data);
+
     }, [])
 
     const submitHandler = async () => {
@@ -36,7 +41,7 @@ const Login = ({loginHandler}) => {
     return (
         <div className={'login-block'}>
             <div className="rooms-wrapper">
-                {!rooms?.data.length && <b>No rooms existed yet :(</b>}
+                {!rooms?.data?.length && <b>No rooms existed yet :(</b>}
                 {
                     rooms?.data && rooms?.data.map((room, idx) =>
                         <button

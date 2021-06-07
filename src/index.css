@@ -37,6 +37,10 @@ body {
   font-size: .8rem;
 }
 
+.exit-btn {
+  margin-bottom: 10px;
+}
+
 .login-block {
   display: flex;
   flex-direction: column;

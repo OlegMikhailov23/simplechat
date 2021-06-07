@@ -66,6 +66,16 @@ io.on('connection', (socket) => {
         io.in(roomId).emit('ROOM:NEW_MESSAGE', obj);
     });
 
+    socket.on('ROOM:EXIT', () => {
+        rooms.forEach((value, roomId) => {
+            socket.leave(roomId);
+            if (value.get('users').delete(socket.id)) {
+                const users = [...rooms.get(roomId).get('users').values()];
+                io.in(roomId).emit('ROOM:SET_USERS', users);
+            }
+        })
+    })
+
     socket.on('disconnect', () => {
         rooms.forEach((value, roomId) => {
             if (value.get('users').delete(socket.id)) {

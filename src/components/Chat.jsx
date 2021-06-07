@@ -16,6 +16,7 @@ function Chat({users, messages, roomId, userName}) {
         setMessageValue('');
     }
 
+
     useEffect(() => {
         messageRef.current.scrollTo(0, 99999)
     }, [messages])
@@ -23,6 +24,7 @@ function Chat({users, messages, roomId, userName}) {
     return (
         <div className="chat">
             <div className="chat-users">
+
                 Комната: <b>{roomId}</b>
                 <hr/>
                 <b>Online: {users.length}</b>

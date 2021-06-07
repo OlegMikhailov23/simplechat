@@ -37,6 +37,13 @@ function App() {
         })
     }
 
+    const exitHandler = () => {
+        socket.emit('ROOM:EXIT', null)
+        dispatch({
+            type: 'EXIT',
+        })
+    }
+
     useEffect(() => {
         socket.on('ROOM:JOINED', obj => {
             setUsers(obj.users)
@@ -51,6 +58,8 @@ function App() {
                 payload: message
             })
         })
+
+        socket.on('ROOM:EXIT', null);
     }, []);
 
     window.socket = socket;
@@ -58,6 +67,7 @@ function App() {
     return (
         <div className="wrapper">
             <h1 className={'main-title'}>Just simple chat</h1>
+            {state.joined && <button className={'btn btn-dark exit-btn'} onClick={exitHandler}>Exit</button>}
             {!state.joined ? <Login loginHandler={loginHandler}/> : <Chat {...state}/>}
         </div>
     );
