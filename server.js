@@ -54,10 +54,13 @@ io.on('connection', (socket) => {
     });
 
     socket.on('ROOM:NEW_MESSAGE', ({ roomId, userName, text }) => {
+        const addZero = (numb) => {
+            return (parseInt(numb, 10) < 10 ? '0' : '') + numb;
+        }
         const obj = {
             userName,
             text,
-            time: `${new Date().getHours()}:${new Date().getMinutes()}`
+            time: `${new Date().getHours()}:${addZero(new Date().getMinutes())}`,
         }
         rooms.get(roomId).get('messages').push(obj);
         io.in(roomId).emit('ROOM:NEW_MESSAGE', obj);
