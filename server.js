@@ -1,6 +1,7 @@
 
 const express = require('express');
 const app = express();
+const  path = require('path');
 
 const server = require('http').Server(app);
 
@@ -13,13 +14,20 @@ const io = require('socket.io')(server, {
     }
 });
 
-const PORT = 8000;
+const PORT = 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 const rooms = new Map();
 
+if (process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'build')))
+
+    app.get('/', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+    })
+}
 
 app.get('/rooms', (req, res) => {
     const collection = Array.from(rooms);

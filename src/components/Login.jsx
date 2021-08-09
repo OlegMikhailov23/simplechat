@@ -15,10 +15,9 @@ const Login = ({loginHandler}) => {
     }
 
     useEffect(async () => {
-        refreshRooms();
+     	refreshRooms();
         const data = await axios.get('/rooms');
         setRooms(data);
-
     }, [])
 
     const submitHandler = async () => {
@@ -43,7 +42,7 @@ const Login = ({loginHandler}) => {
             <div className="rooms-wrapper">
                 {!rooms?.data?.length && <b>No rooms existed yet :(</b>}
                 {
-                    rooms?.data && rooms?.data.map((room, idx) =>
+                    rooms?.data && rooms?.data?.map((room, idx) =>
                         <button
                             key={idx}
                             className={"btn btn-info room-btn"}

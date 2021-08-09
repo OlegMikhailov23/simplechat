@@ -18,12 +18,12 @@
   },
   "author": "Oleg Mikhaylov <dkfolkin@gmail.com>",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_ENV=production node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server.js",
-    "dev": "concurrently \"yarn server\" \"yarn start\""
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run start\""
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3"
   }
 }
